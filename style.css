@@ -1,0 +1,326 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #fff0da;
+}
+
+header {
+    background-color: #FF6347;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    font-family: 'Pacifico', cursive;
+}
+
+header h1 {
+    margin: 0;
+    font-family: 'Pacifico', cursive;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+}
+
+nav ul li {
+    margin: 0 1rem;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+main {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h2 {
+    text-align: center;
+    margin-top: 2rem;
+    font-family: 'Pacifico', cursive;
+}
+
+.cardapio-item {
+    display: flex;
+    align-items: center;
+    margin: 1rem auto; /* Centraliza os itens horizontalmente */
+    width: 600px; /* Largura fixa para todos os itens */
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 1rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+    color: black;
+    background-color: white;
+}
+
+.cardapio-item img {
+    width: 125px;
+    height: 125px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-right: 1rem;
+}
+
+.cardapio-desc {
+    flex: 1;
+}
+
+.cardapio-item h3 {
+    margin: 0.5rem 0;
+}
+
+footer {
+    background-color: #FF6347;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+   
+    width: 100%;
+    bottom: 0;
+}
+
+.item-page {
+    text-align: center;
+}
+
+.item-page img {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin: 1rem 0;
+}
+
+.item-page .item-details {
+    background-color: #f9f9f9;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 1rem 0;
+    width: 80%;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.item-page .item-details p {
+    margin: 1rem 0;
+}
+
+.item-page .item-details .price {
+    font-size: 1.5rem;
+    color: #333;
+    margin: 1rem 0;
+}
+
+.item-page .item-details label {
+    display: block;
+    margin-top: 1rem;
+    font-size: 1rem;
+}
+
+.item-page .quantity-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem; /* Aumentando o espaço entre o contador e os botões */
+}
+
+.item-page .quantity-controls button {
+    padding: 0.5rem;
+    font-size: 1rem;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.item-page .quantity-controls button:hover {
+    background-color: #555;
+}
+
+.item-page .quantity-controls .quantity-box {
+    border: 2px solid #000; /* Adicionando uma borda preta */
+    border-radius: 5px;
+    padding: 0.5rem;
+    margin: 0 1rem; /* Aumentando o espaço entre o contador e os botões */
+}
+
+.item-page .quantity-controls .quantity-box span {
+    font-size: 1rem;
+}
+
+.item-page .add-to-cart-btn {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    background-color: #009000; /* Verde claro */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 1rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+.item-page .add-to-cart-btn:hover {
+    background-color: #8bd884; /* Verde mais claro */
+}
+
+.item-page .go-back-btn {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    background-color: #ffcc00; /* Amarelo claro */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 1rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+.item-page .go-back-btn:hover {
+    background-color: #ffdf66; /* Amarelo mais claro */
+}
+
+/* Estilos para o botão de carrinho de compras */
+.cart-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #FF6347; /* Cor de fundo */
+    color: white; /* Cor do ícone */
+    font-size: 24px;
+    width: 60px; /* Largura do botão */
+    height: 60px; /* Altura do botão */
+    border-radius: 50%; /* Forma circular */
+    display: flex; /* Para centralizar o ícone verticalmente */
+    align-items: center; /* Para centralizar o ícone verticalmente */
+    justify-content: center; /* Para centralizar o ícone horizontalmente */
+    text-decoration: none;
+    z-index: 999; /* Garante que o botão fique sobre outros elementos */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Sombra */
+    
+}
+
+/* Quando o cursor está sobre o botão */
+.cart-button:hover {
+    background-color: #FF5733; /* Mudança de cor ao passar o mouse */
+}
+
+/* Estilos para o ícone de carrinho */
+.cart-button i {
+    pointer-events: none; /* Impede que o ícone seja clicado */
+}
+
+/* Estilos para o contador de itens */
+.cart-counter {
+    position: absolute; /* Posicionamento absoluto */
+    top: -5px; /* Posicionamento em relação ao topo */
+    right: -5px; /* Posicionamento em relação à direita */
+    background-color: #fff; /* Cor de fundo */
+    color: #FF6347; /* Cor do texto */
+    font-size: 12px; /* Tamanho da fonte */
+    width: 20px; /* Largura */
+    height: 20px; /* Altura */
+    border-radius: 50%; /* Forma circular */
+    display: flex; /* Para centralizar o texto verticalmente */
+    align-items: center; /* Para centralizar o texto verticalmente */
+    justify-content: center; /* Para centralizar o texto horizontalmente */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Sombra */
+}
+
+
+
+/* No arquivo style.css */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+.total {
+    text-align: right;
+}
+
+.remove-btn {
+    background-color: #ff0000;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.remove-btn:hover {
+    background-color: #cc0000;
+}
+
+.product {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+fieldset {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+legend {
+    font-weight: bold;
+    color: #cc9900;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+

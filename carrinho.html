@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrinho - Pizzaria Delícia</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Adiciona estilo para o botão de remover */
+        .remove-btn {
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .remove-btn:hover {
+            background-color: #cc0000;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Pizzaria Delícia</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="index.html#pizzas">Pizzas</a></li>
+                <li><a href="index.html#pizzas-doces">Pizzas Doces</a></li>
+                <li><a href="index.html#petiscos-porcoes">Petiscos e Porções</a></li>
+                <li><a href="index.html#drinks">Drinks</a></li>
+                <li><a href="index.html#sucos-bebidas">Sucos e Bebidas</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+
+        
+        <div class="cart-items">
+            <h2>Carrinho</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Observação</th>
+                        <th>Quantidade</th>
+                        <th>Preço</th>
+                        <th>Remover</th> <!-- Coluna para o botão de remover -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Os itens do carrinho serão exibidos aqui dinamicamente -->
+                </tbody>
+            </table>
+            <div class="total">
+                <p>Total: <span id="total-price">R$ 0,00</span></p>
+            </div>
+        </div>
+        <div class="buttons">
+            <button class="whatsapp-btn" onclick="finalizeOrder()">Finalizar Pedido via WhatsApp</button>
+        </div>
+        
+        
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Pizzaria Delícia. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Obtem os dados do localStorage
+            var cartItems = JSON.parse(localStorage.getItem('cartItems'));
+            var totalPrice = parseFloat(localStorage.getItem('totalPrice'));
+
+            // Verifica se há itens no carrinho
+            if (cartItems && cartItems.length > 0) {
+                var tableBody = document.querySelector('.cart-items tbody');
+                var totalElement = document.getElementById('total-price');
+                
+                // Limpa a tabela
+                tableBody.innerHTML = '';
+                var totalCartPrice = 0;
+
+                // Preenche a tabela com os itens do carrinho
+                cartItems.forEach(function(item, index) {
+                    var newRow = tableBody.insertRow();
+                    newRow.innerHTML = `
+                        <td>${item.name}</td>
+                        <td>${item.observation}</td>
+                        <td>${item.quantity}</td>
+                        <td>R$ ${(item.price * item.quantity).toFixed(2)}</td>
+                        <td><button class="remove-btn" onclick="removeItem(${index})">Remover</button></td>
+                    `;
+                    totalCartPrice += item.price * item.quantity;
+                });
+
+                // Exibe o total
+                totalElement.textContent = 'R$ ' + totalCartPrice.toFixed(2);
+            } else {
+                // Se não houver itens, mostra uma mensagem
+                tableBody.innerHTML = '<tr><td colspan="5">Nenhum item no carrinho</td></tr>';
+            }
+        });
+
+        function removeItem(index) {
+            // Obter o carrinho do localStorage
+            var cartItems = JSON.parse(localStorage.getItem('cartItems'));
+
+            // Remover o item do carrinho
+            var removedItem = cartItems.splice(index, 1)[0];
+
+            // Atualizar o preço total do carrinho no localStorage
+            var totalCartPrice = parseFloat(localStorage.getItem('totalPrice')) || 0;
+            totalCartPrice -= (removedItem.price * removedItem.quantity);
+            localStorage.setItem('totalPrice', totalCartPrice);
+
+            // Salvar o carrinho atualizado no localStorage
+            localStorage.setItem('cartItems', JSON.stringify(cartItems));
+
+            // Atualizar a página
+            location.reload();
+        }
+
+        function finalizeOrder() {
+    var cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    var totalCartPrice = parseFloat(localStorage.getItem('totalCartPrice')) || 0;
+    
+    var message = 'Pedido via WhatsApp:\n\n';
+    cartItems.forEach(function(item) {
+        message += `Item: ${item.name}\n`;
+        message += `Observação: ${item.observation}\n`;
+        message += `Quantidade: ${item.quantity}\n`;
+        message += `Preço: R$ ${item.price}\n\n`;
+    });
+    message += `Total do Carrinho: R$ ${totalCartPrice.toFixed(2)}`;
+
+    // Encode the message for WhatsApp
+    var encodedMessage = encodeURIComponent(message);
+
+    // Open WhatsApp with the message filled in
+    window.open(`https://wa.me/5562999575440?text=${encodedMessage}`, '_blank');
+}
+
+    </script>
+</body>
+</html>

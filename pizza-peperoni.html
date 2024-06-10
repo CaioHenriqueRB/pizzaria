@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizza Peperoni - Pizzaria Delícia</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Pizzaria Delícia</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="index.html#pizzas">Pizzas</a></li>
+                <li><a href="index.html#pizzas-doces">Pizzas Doces</a></li>
+                <li><a href="index.html#petiscos-porcoes">Petiscos e Porções</a></li>
+                <li><a href="index.html#drinks">Drinks</a></li>
+                <li><a href="index.html#sucos-bebidas">Sucos e Bebidas</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <div class="item-page">
+            <div class="item-details">
+                <h2>Pizza Peperoni</h2>
+                <img src="C:\Users\henri\Desktop\pizzaria\pizzaria2\imagens\imgs-pizzas\margherita.png" alt="Pizza Peperoni">
+                <p>Molho de tomate, mussarela, manjericão fresco e azeite de oliva.</p>
+                <p class="price">R$ 30,00</p>
+                <div class="quantity-controls">
+                    <button type="button" onclick="decreaseQuantity()">-</button>
+                    <div class="quantity-box">
+                        <span id="quantity">1</span>
+                    </div>
+                    <button type="button" onclick="increaseQuantity()">+</button>
+                </div>
+                <div class="observation">
+                    <label for="observation">Observação:</label>
+                    <textarea id="observation" name="observation" rows="4" cols="50"></textarea>
+                </div>
+                <div class="buttons">
+                    <button class="go-back-btn" onclick="goBack()">⇦ Voltar</button>
+                    <button class="add-to-cart-btn" onclick="addToCart()">🛒 Adicionar</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Pizzaria Delícia. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        function increaseQuantity() {
+            var quantity = document.getElementById('quantity');
+            var value = parseInt(quantity.innerText);
+            quantity.innerText = value + 1;
+        }
+
+        function decreaseQuantity() {
+            var quantity = document.getElementById('quantity');
+            var value = parseInt(quantity.innerText);
+            if (value > 1) {
+                quantity.innerText = value - 1;
+            }
+        }
+
+        function addToCart() {
+            const itemName = "Pizza Peperoni";
+            const quantity = parseInt(document.getElementById('quantity').innerText);
+            const observation = document.getElementById('observation').value;
+            const pricePerPizza = 30.00; // Preço unitário para a pizza Margherita
+
+            // Calcular o preço total do item
+            const totalPrice = pricePerPizza;
+
+            // Obter carrinho do localStorage ou criar um novo array vazio
+            var cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+            // Adicionar novo item ao carrinho
+            cartItems.push({
+                name: itemName,
+                observation: observation,
+                quantity: quantity,
+                price: totalPrice // Usar o preço total calculado
+            });
+
+            // Atualizar o preço total do carrinho no localStorage
+            var totalCartPrice = parseFloat(localStorage.getItem('totalPrice')) || 0;
+            totalCartPrice += totalPrice;
+            localStorage.setItem('totalPrice', totalCartPrice);
+
+            // Salvar carrinho atualizado no localStorage
+            localStorage.setItem('cartItems', JSON.stringify(cartItems));
+
+            // Redirecionar para a página do carrinho
+            window.location.href = 'carrinho.html';
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

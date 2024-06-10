@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizza Margherita - Pizzaria Delícia</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Pizzaria Delícia</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="index.html#pizzas">Pizzas</a></li>
+                <li><a href="index.html#pizzas-doces">Pizzas Doces</a></li>
+                <li><a href="index.html#petiscos-porcoes">Petiscos e Porções</a></li>
+                <li><a href="index.html#drinks">Drinks</a></li>
+                <li><a href="index.html#sucos-bebidas">Sucos e Bebidas</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <div class="item-page">
+            <div class="item-details">
+                <h2>Pizza Margherita</h2>
+                <img src="C:\Users\henri\Desktop\pizzaria\pizzaria2\imagens\imgs-pizzas\margherita.png" alt="Pizza Margherita">
+                <p>Molho de tomate, mussarela, manjericão fresco e azeite de oliva.</p>
+                
+                <!-- Escolha do tamanho -->
+                <form id="pizza-options-form">
+                    <fieldset>
+                        <legend>Escolher tamanho</legend>
+                        <label>
+                            <input type="radio" name="size" value="Brotinho" data-price="22.00">
+                            Brotinho - R$ 22,00
+                        </label><br>
+                        <label>
+                            <input type="radio" name="size" value="Média" data-price="25.00">
+                            Média - R$ 25,00
+                        </label><br>
+                        <label>
+                            <input type="radio" name="size" value="Grande" data-price="29.00">
+                            Grande - R$ 29,00
+                        </label><br>
+                        <label>
+                            <input type="radio" name="size" value="Família" data-price="34.00">
+                            Família - R$ 34,00
+                        </label>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Escolher tipo</legend>
+                        <label>
+                            <input type="radio" name="type" value="Inteira" checked>
+                            Pizza Inteira
+                        </label><br>
+                        <label>
+                            <input type="radio" name="type" value="Meia">
+                            Meia Pizza
+                        </label>
+                    </fieldset>
+                </form>
+
+                <div class="quantity-controls">
+                    <button type="button" onclick="decreaseQuantity()">-</button>
+                    <div class="quantity-box">
+                        <span id="quantity">1</span>
+                    </div>
+                    <button type="button" onclick="increaseQuantity()">+</button>
+                </div>
+                <div class="observation">
+                    <label for="observation">Observação:</label>
+                    <textarea id="observation" name="observation" rows="4" cols="50"></textarea>
+                </div>
+                <div class="buttons">
+                    <button class="go-back-btn" onclick="goBack()">⇦ Voltar</button>
+                    <button class="add-to-cart-btn" onclick="addToCart()">🛒 Adicionar</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Pizzaria Delícia. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        function increaseQuantity() {
+            var quantity = document.getElementById('quantity');
+            var value = parseInt(quantity.innerText);
+            quantity.innerText = value + 1;
+        }
+
+        function decreaseQuantity() {
+            var quantity = document.getElementById('quantity');
+            var value = parseInt(quantity.innerText);
+            if (value > 1) {
+                quantity.innerText = value - 1;
+            }
+        }
+
+        function addToCart() {
+            const form = document.getElementById('pizza-options-form');
+            const sizeElement = form.elements['size'];
+            const sizeRadio = sizeElement ? sizeElement.querySelector('input[name="size"]:checked') : null;
+            const size = sizeRadio ? sizeRadio.value : 'Média'; // Default to Média if no size is selected
+            const sizePrice = sizeRadio ? parseFloat(sizeRadio.getAttribute('data-price')) : 25.00; // Default price for Média
+
+            const typeElement = form.elements['type'];
+            const typeRadio = typeElement ? typeElement.querySelector('input[name="type"]:checked') : null;
+            const type = typeRadio ? typeRadio.value : 'Inteira'; // Default to Inteira if no type is selected
+
+            const itemName = 'Pizza Margherita - ' + size + ' (' + type + ')';
+            const quantity = parseInt(document.getElementById('quantity').innerText);
+            const observation = document.getElementById('observation').value;
+
+            // Calcular o preço total do item
+            const totalPrice = sizePrice * quantity;
+
+            // Obter carrinho do localStorage ou criar um novo array vazio
+            var cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+            // Adicionar novo item ao carrinho
+            cartItems.push({
+                name: itemName,
+                observation: observation,
+                quantity: quantity,
+                price: sizePrice, // Salvar o preço unitário
+                totalPrice: totalPrice // Salvar o preço total do item (quantidade * preço unitário)
+            });
+
+            // Atualizar o preço total do carrinho no localStorage
+            var totalCartPrice = parseFloat(localStorage.getItem('totalPrice')) || 0;
+            totalCartPrice += totalPrice;
+            localStorage.setItem('totalPrice', totalCartPrice.toFixed(2));
+
+            // Salvar carrinho atualizado no localStorage
+            localStorage.setItem('cartItems', JSON.stringify(cartItems));
+
+            // Se o tipo for "Meia", redirecionar para o cardápio para escolher a outra metade
+            if (type === 'Meia') {
+                alert("Você escolheu meia pizza. Escolha a outra metade no cardápio.");
+                window.location.href = 'index.html#pizzas';
+            } else {
+                // Redirecionar para a página do carrinho
+                window.location.href = 'carrinho.html';
+            }
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>
